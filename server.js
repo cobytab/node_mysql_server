@@ -9,6 +9,7 @@ const mysqldb = require("./db").connection;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Inserting data into the database
 app.post("/add", (req, res) => {
   const details = req.body;
   mysqldb.query("INSERT INTO students SET ?", details, (error, results) => {
@@ -17,6 +18,7 @@ app.post("/add", (req, res) => {
   });
 });
 
+// Fetching specific data from the database
 app.get("/data/:searchId", (req, res) => {
   const { searchId } = req.params;
   mysqldb.query(
@@ -29,6 +31,7 @@ app.get("/data/:searchId", (req, res) => {
   );
 });
 
+// Fetching data from the database
 app.get("/data", (req, res) => {
   mysqldb.query("SELECT * FROM students", (error, results) => {
     if (error) throw error;
@@ -36,6 +39,7 @@ app.get("/data", (req, res) => {
   });
 });
 
+// Root route handler
 app.get("/", (req, res) => {
   res.send("Hello World! It's a test server");
 });
